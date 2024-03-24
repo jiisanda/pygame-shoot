@@ -1,11 +1,11 @@
-import pygame                               # imports package pygame
+import pygame  # imports package pygame
 
-pygame.init()                               # initializing the package
+pygame.init()  # initializing the package
 
-win = pygame.display.set_mode((500, 480))   # setting the window width as (length, breath)
+win = pygame.display.set_mode((500, 480))  # setting the window width as (length, breath)
 
 # screenWidth = 500
-pygame.display.set_caption("Shoot The Goblin")    # Setting the name/caption to the game
+pygame.display.set_caption("Shoot The Goblin")  # Setting the name/caption to the game
 
 # This goes outside the while loop, near the top of the program
 # remember to keep the images and the game file in the same directory
@@ -25,8 +25,8 @@ walkLeft = [
     pygame.image.load('assets/player/L9.png')
 ]
 
-bg = pygame.image.load('bg.jpg')
-char = pygame.image.load('standing.png')
+bg = pygame.image.load('assets/bg.jpg')
+char = pygame.image.load('assets/standing.png')
 
 clock = pygame.time.Clock()
 
@@ -51,7 +51,7 @@ class Player(object):
         self.walkCount = 0
         self.jumpCount = 10
         self.standing = True
-        self.hitbox = (self.x + 17, self.y + 11, 29, 52)   # 4 things inside a tuple is rectangle (x, y, width, height)
+        self.hitbox = (self.x + 17, self.y + 11, 29, 52)  # 4 things inside a tuple is rectangle (x, y, width, height)
 
     def draw(self, win):
         if self.walkCount + 1 >= 27:
@@ -65,10 +65,10 @@ class Player(object):
                 win.blit(walkRight[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
         else:
-           if self.right:
-               win.blit(walkRight[0], (self.x, self.y))
-           else:
-               win.blit(walkLeft[0], (self.x, self.y))
+            if self.right:
+                win.blit(walkRight[0], (self.x, self.y))
+            else:
+                win.blit(walkLeft[0], (self.x, self.y))
         self.hitbox = (self.x + 17, self.y + 11, 29, 52)
         # pygame.draw.rect(win, (255,0,0), self.hitbox, 2)
 
@@ -78,9 +78,9 @@ class Player(object):
         self.x = 100
         self.y = 410
         self.walkCount = 0
-        font1 = pygame.font.SysFont('conicsana', 100)
+        font1 = pygame.font.SysFont('conicsans', 100)
         text = font1.render('-5', 1, (255, 0, 0))
-        win.blit(text, (250 - (text.get_width()/2), 200))
+        win.blit(text, (250 - (text.get_width() / 2), 200))
         pygame.display.update()
         i = 0
         while i < 200:
@@ -143,12 +143,12 @@ class Enemy(object):
                 self.walkCount = 0
 
             if self.vel > 0:
-                win.blit(self. walkRight[self.walkCount // 3], (self.x, self.y))
+                win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
             else:
-                win.blit(self. walkLeft[self.walkCount // 3], (self.x, self.y))
+                win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
-            pygame.draw.rect(win, (255, 0, 0), (self.hitbox[0], self.hitbox[1] - 20, 50, 10 ))
+            pygame.draw.rect(win, (255, 0, 0), (self.hitbox[0], self.hitbox[1] - 20, 50, 10))
             pygame.draw.rect(win, (0, 120, 0), (self.hitbox[0], self.hitbox[1] - 20, 50 - (5 * (10 - self.health)), 10))
             self.hitbox = (self.x + 17, self.y + 2, 31, 57)
             # pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
@@ -175,7 +175,7 @@ class Enemy(object):
         print("HIT!!!")
 
 
-def redrawGameWindow():                     # any change in drawing the loop we would be dong it here
+def redraw_game_window():  # any change in drawing the loop we would be doing it here
     win.blit(bg, (0, 0))
     text = font.render("Score: " + str(score), 1, (0, 0, 0))
     win.blit(text, (350, 10))
@@ -192,11 +192,11 @@ man = Player(300, 410, 64, 64)
 goblin = Enemy(100, 410, 64, 64, 450)
 ShootLoop = 0
 bullets = []
-run = True                                  # initializing the run as true for moving the rectangle
-while run:                                  # main loop
+run = True  # initializing the run as true for moving the rectangle
+while run:  # main loop
     clock.tick(27)
 
-    if goblin.visible == True:
+    if goblin.visible:
         if man.hitbox[1] < goblin.hitbox[1] + goblin.hitbox[3] and man.hitbox[1] + man.hitbox[3] > goblin.hitbox[1]:
             if man.hitbox[0] + man.hitbox[2] > goblin.hitbox[0] and man.hitbox[0] < goblin.hitbox[0] + goblin.hitbox[2]:
                 man.hit()
@@ -207,23 +207,25 @@ while run:                                  # main loop
     if ShootLoop > 3:
         ShootLoop = 0
 
-    for event in pygame.event.get():        # event: - anything that happens from user here movement of rectangle
-        if event.type == pygame.QUIT:       # if the user clicks [x] on the top right corner then
-            run = False                     # the run gets False i.e., stops...
+    for event in pygame.event.get():  # event: - anything that happens from user here movement of rectangle
+        if event.type == pygame.QUIT:  # if the user clicks [x] in the top right corner then
+            run = False  # the run gets False i.e., stops...
 
     for bullet in bullets:
-        if bullet.y - bullet.radius < goblin.hitbox[1] + goblin.hitbox[3] and bullet.y + bullet.radius > goblin.hitbox[1]:
-            if bullet.x + bullet.radius > goblin.hitbox[0] and bullet.x - bullet.radius < goblin.hitbox[0] + goblin.hitbox[2]:
+        if ((bullet.y - bullet.radius < goblin.hitbox[1] + goblin.hitbox[3]) and
+                (bullet.y + bullet.radius > goblin.hitbox[1])):
+            if bullet.x + bullet.radius > goblin.hitbox[0] and bullet.x - bullet.radius < goblin.hitbox[0] + \
+                    goblin.hitbox[2]:
                 goblin.hit()
                 score += 1
                 bullets.pop(bullets.index(bullet))
-                
-        if bullet.x < 500 and bullet.x > 0:
+
+        if 500 > bullet.x > 0:
             bullet.x += bullet.vel
         else:
             bullets.pop(bullets.index(bullet))
 
-    keys = pygame.key.get_pressed()      # if the user presses key and the key which user press is known by this fun
+    keys = pygame.key.get_pressed()  # if the user presses key and the key which user press is known by this fun
 
     if keys[pygame.K_SPACE] and ShootLoop == 0:
         # bulletSound.play()
@@ -232,12 +234,14 @@ while run:                                  # main loop
         else:
             facing = 1
         if len(bullets) < 5:
-            bullets.append(Projectile(round(man.x + man.width //2), round(man.y + man.height//2), 6, (0,0,0), facing))
+            bullets.append(
+                Projectile(round(man.x + man.width // 2), round(man.y + man.height // 2), 6, (0, 0, 0), facing))
 
         ShootLoop = 1
 
-    if keys[pygame.K_LEFT] and man.x > man.vel:     # if it presses Left Key(<--)(here and the x > vel sets the boundaries,then)
-        man.x -= man.vel                            # moves left
+    if keys[pygame.K_LEFT] and man.x > man.vel:
+        # if it presses Left Key(<--)(here and the x > vel sets the boundaries,then)
+        man.x -= man.vel  # moves left
         man.left = True
         man.right = False
         man.standing = False
@@ -248,17 +252,18 @@ while run:                                  # main loop
         man.left = False
         man.standing = False
     else:
-        man.standing = True             # from this we would know he is looking left or right
+        man.standing = True  # from this we would know he is looking left or right
         man.walkCount = 0
 
-    if not man.isJump:                        # Now if we jump and we will go up and come down here if not isJump makes True
-        if keys[pygame.K_UP]:    # For Jumping
+    if not man.isJump:
+        # Now if we jump, and we will go up and come down here if not isJump makes True
+        if keys[pygame.K_UP]:  # For Jumping
             man.isJump = True
             man.right = False
             man.left = False
             man.walkCount = 0
 
-    else:                                   # if isJump is False then
+    else:  # if isJump is False then
         if man.jumpCount >= -10:
             neg = 1
             if man.jumpCount < 0:
@@ -268,6 +273,6 @@ while run:                                  # main loop
         else:
             man.isJump = False
             man.jumpCount = 10
-    redrawGameWindow()
+    redraw_game_window()
 
-pygame.quit()                               # quits the game
+pygame.quit()  # quits the game
