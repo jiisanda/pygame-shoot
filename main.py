@@ -1,6 +1,5 @@
-
-
 import pygame                               # imports package pygame
+
 pygame.init()                               # initializing the package
 
 win = pygame.display.set_mode((500, 480))   # setting the window width as (length, breath)
@@ -11,12 +10,20 @@ pygame.display.set_caption("Shoot The Goblin")    # Setting the name/caption to 
 # This goes outside the while loop, near the top of the program
 # remember to keep the images and the game file in the same directory
 
-walkRight = [pygame.image.load('R1.png'), pygame.image.load('R2.png'), pygame.image.load('R3.png'), 
-            pygame.image.load('R4.png'), pygame.image.load('R5.png'), pygame.image.load('R6.png'), 
-            pygame.image.load('R7.png'), pygame.image.load('R8.png'), pygame.image.load('R9.png')]
-walkLeft = [pygame.image.load('L1.png'), pygame.image.load('L2.png'), pygame.image.load('L3.png'), 
-            pygame.image.load('L4.png'), pygame.image.load('L5.png'), pygame.image.load('L6.png'), 
-            pygame.image.load('L7.png'), pygame.image.load('L8.png'), pygame.image.load('L9.png')]
+walkRight = [
+    pygame.image.load('assets/player/R1.png'), pygame.image.load('assets/player/R2.png'),
+    pygame.image.load('assets/player/R3.png'), pygame.image.load('assets/player/R4.png'),
+    pygame.image.load('assets/player/R5.png'), pygame.image.load('assets/player/R6.png'),
+    pygame.image.load('assets/player/R7.png'), pygame.image.load('assets/player/R8.png'),
+    pygame.image.load('assets/player/R9.png')
+]
+walkLeft = [
+    pygame.image.load('assets/player/L1.png'), pygame.image.load('assets/player/L2.png'),
+    pygame.image.load('assets/player/L3.png'), pygame.image.load('assets/player/L4.png'),
+    pygame.image.load('assets/player/L5.png'), pygame.image.load('assets/player/L6.png'),
+    pygame.image.load('assets/player/L7.png'), pygame.image.load('assets/player/L8.png'),
+    pygame.image.load('assets/player/L9.png')
+]
 
 bg = pygame.image.load('bg.jpg')
 char = pygame.image.load('standing.png')
@@ -28,6 +35,7 @@ clock = pygame.time.Clock()
 # pygame.mixer.music.play(-1)
 
 score = 0
+
 
 class Player(object):
     def __init__(self, x, y, width, height):
@@ -84,7 +92,7 @@ class Player(object):
                     pygame.quit()
 
 
-class projectile(object):
+class Projectile(object):
     def __init__(self, x, y, radius, color, facing):
         self.x = x
         self.y = y
@@ -98,14 +106,22 @@ class projectile(object):
 
 
 class Enemy(object):
-    walkRight = [pygame.image.load('R1E.png'), pygame.image.load('R2E.png'), pygame.image.load('R3E.png'),
-                 pygame.image.load('R4E.png'), pygame.image.load('R5E.png'), pygame.image.load('R6E.png'),
-                 pygame.image.load('R7E.png'), pygame.image.load('R8E.png'), pygame.image.load('R9E.png'),
-                 pygame.image.load('R10E.png'), pygame.image.load('R11E.png')]
-    walkLeft = [pygame.image.load('L1E.png'), pygame.image.load('L2E.png'), pygame.image.load('L3E.png'),
-                pygame.image.load('L4E.png'), pygame.image.load('L5E.png'), pygame.image.load('L6E.png'),
-                pygame.image.load('L7E.png'), pygame.image.load('L8E.png'), pygame.image.load('L9E.png'),
-                pygame.image.load('L10E.png'), pygame.image.load('L11E.png')]
+    walkRight = [
+        pygame.image.load('assets/goblin/L1E.png'), pygame.image.load('assets/goblin/L2E.png'),
+        pygame.image.load('assets/goblin/L3E.png'), pygame.image.load('assets/goblin/L4E.png'),
+        pygame.image.load('assets/goblin/L5E.png'), pygame.image.load('assets/goblin/L6E.png'),
+        pygame.image.load('assets/goblin/L7E.png'), pygame.image.load('assets/goblin/L8E.png'),
+        pygame.image.load('assets/goblin/L9E.png'), pygame.image.load('assets/goblin/L10E.png'),
+        pygame.image.load('assets/goblin/L11E.png')
+    ]
+    walkLeft = [
+        pygame.image.load('assets/goblin/L1E.png'), pygame.image.load('assets/goblin/L2E.png'),
+        pygame.image.load('assets/goblin/L3E.png'), pygame.image.load('assets/goblin/L4E.png'),
+        pygame.image.load('assets/goblin/L5E.png'), pygame.image.load('assets/goblin/L6E.png'),
+        pygame.image.load('assets/goblin/L7E.png'), pygame.image.load('assets/goblin/L8E.png'),
+        pygame.image.load('assets/goblin/L9E.png'), pygame.image.load('assets/goblin/L10E.png'),
+        pygame.image.load('assets/goblin/L11E.png')
+    ]
 
     def __init__(self, x, y, width, height, end):
         self.x = x
@@ -216,7 +232,7 @@ while run:                                  # main loop
         else:
             facing = 1
         if len(bullets) < 5:
-            bullets.append(projectile(round(man.x + man.width //2), round(man.y + man.height//2), 6, (0,0,0), facing))
+            bullets.append(Projectile(round(man.x + man.width //2), round(man.y + man.height//2), 6, (0,0,0), facing))
 
         ShootLoop = 1
 
